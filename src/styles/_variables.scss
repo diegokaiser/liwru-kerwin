@@ -1,0 +1,50 @@
+@import "./custom";
+/* colores de marca */
+/* primarios */
+$color1: #002b76;
+
+$color2: #ff4f10;
+
+$color3: #0063bd;
+
+$color4: #ff7800;
+$color4-hover: #ff9333;
+
+/* secundarios */
+$blanco: white;
+$negro: black;
+
+/* validaciones */
+$valid: #4caf50;
+$invalid: #f44336;
+
+/* tipografías de marca y tamaños de fuente */
+@mixin light {
+  font-family: "Primera";
+  font-weight: 300;
+}
+
+@mixin regular {
+  font-family: "Segunda";
+  font-weight: 400;
+}
+
+@mixin medium {
+  font-family: "Tercera";
+  font-weight: 500;
+}
+
+@mixin semibold {
+  font-family: "Cuarta";
+  font-weight: 600;
+}
+
+@mixin bold {
+  font-family: "Quinta";
+  font-weight: 700;
+}
+
+@mixin extrabold {
+  font-family: "Sexta";
+  font-weight: 800;
+}

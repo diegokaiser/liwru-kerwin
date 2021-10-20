@@ -1,0 +1,488 @@
+@import "./styles/mixins";
+@import "./styles/mediaqueries";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgba($color: #000000, $alpha: 0.05);
+  height: auto;
+  min-height: 100vh;
+}
+
+#liwru {
+  height: auto;
+  min-height: calc(100vh - 162.5px);
+  padding: 105px 0 56px 0;
+  @include tablet1024 {
+    padding: 105px 0 56px 0;
+  }
+  @include laptop1200 {
+    padding: 162.5px 0 70px 0;
+  }
+}
+
+.liwru {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  &-home {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    box-sizing: border-box;
+    border-radius: 16px;
+    min-height: auto;
+    padding: 35px 35px 77px 35px;
+    position: relative;
+    width: 90%;
+    h2 {
+      @include titulo;
+    }
+    p {
+      @include texto;
+      margin: 28px 0;
+      width: 100%;
+      &.alignCenter {
+        margin: 56px auto;
+        text-align: center;
+        &.mod {
+          margin: 56px auto 0 auto;
+          & + p {
+            margin: 14px auto 0 auto;
+            & + p {
+              margin: 14px auto 0 auto;
+            }
+          }
+        }
+        &.modd {
+          margin: 49px auto 35px auto;
+          & + p {
+            margin: 14px auto 0 auto;
+            & + p {
+              margin: 14px auto 0 auto;
+            }
+          }
+        }
+      }
+      & + p {
+        margin: 14px auto 0 auto;
+      }
+      &.search {
+        margin: 28px 0 0 0;
+        & + p {
+          margin: 14px 0 0 0;
+        }
+        strong {
+          display: block;
+          margin-top: 28px;
+        }
+        @include tablet992 {
+          margin: 56px 0 0 0;
+        }
+        @include tablet1024 {
+          margin: 42px 0 0 0;
+        }
+      }
+      strong {
+        @include semibold;
+      }
+      a {
+        color: $color4;
+      }
+      @include tablet992 {
+        margin: 56px 0 84px 0;
+        width: 70%;
+      }
+    }
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+    &:before {
+      background-image: url("./assets/images/logo.svg");
+      content: "";
+      display: block;
+      height: 45px;
+      left: 0;
+      position: absolute;
+      top: -56px;
+      width: 112px;
+      z-index: 9;
+    }
+    &.step {
+      height: auto;
+      min-height: 644px;
+      padding: 77px 77px 154px 77px;
+      &.xs-height {
+        padding: 77px 77px 154px 77px;
+      }
+    }
+    &.xs-height {
+      padding: 80px 35px 203px 35px;
+      @include tablet992 {
+        padding: 35px 35px 77px 35px;
+      }
+    }
+    @include tablet1024 {
+      min-height: calc(100vh - 162.5px - 162.5px);
+      padding: 77px 77px 168px 77px;
+    }
+    @include laptop1200 {
+      padding: 77px;
+      width: 1076px;
+      &.xs-height {
+        padding: 77px;
+      }
+    }
+  }
+  &-forms {
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    &.success {
+      margin-top: 49px;
+    }
+    &.stepzero {
+      justify-content: flex-start;
+      margin-top: 28px;
+      .liwru-forms-group {
+        label {
+          align-items: center;
+          display: flex;
+          font-size: 12px;
+          justify-content: flex-start;
+        }
+      }
+    }
+    &.steps {
+      flex-direction: column;
+      margin-top: 49px;
+      .liwru-forms-row {
+        margin-bottom: 35px;
+        width: 100%;
+        &.just-one {
+          justify-content: flex-start;
+          margin-top: 14px;
+          .liwru-forms-group {
+            width: 100%;
+            @include tablet1024 {
+              width: 50%;
+            }
+            label {
+              align-items: center;
+              display: flex;
+              justify-content: flex-start;
+            }
+            &.fullsize {
+              width: 100%;
+            }
+            &-subgroup {
+              display: flex;
+              justify-content: flex-start;
+              margin-top: 14px;
+              label {
+                margin-left: 42px;
+                width: 161px;
+                &:nth-child(1) {
+                  margin-left: 0;
+                }
+              }
+            }
+          }
+        }
+        &.just-two {
+          .liwru-forms-group {
+            width: 100%;
+            @include tablet1024 {
+              width: 48.5%;
+            }
+          }
+        }
+        &.align-items-end {
+          align-items: end;
+        }
+        &.files {
+          margin-bottom: 35px;
+          .liwru-forms-group {
+            strong {
+              margin-bottom: 0;
+            }
+            button {
+              width: 100%;
+              @include tablet992 {
+                width: initial;
+              }
+            }
+            @include tablet992 {
+              margin-top: 21px;
+            }
+            &:nth-child(1) {
+              strong {
+                margin-bottom: 4px;
+              }
+            }
+          }
+          @include tablet992 {
+            margin-bottom: 14px;
+          }
+        }
+      }
+      .liwru-forms-group {
+        margin-top: 21px;
+        width: 100%;
+        &:nth-child(1) {
+          margin-top: 0;
+        }
+        @include tablet1024 {
+          margin-top: 0;
+          width: 28%;
+        }
+        input {
+          width: calc(100% - 14px - 14px - 2px);
+          &[type="checkbox"] {
+            width: initial;
+          }
+        }
+        select {
+          width: 100%;
+        }
+      }
+    }
+    &-row {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      @include tablet992 {
+        flex-direction: row;
+      }
+    }
+    &-group {
+      strong {
+        display: block;
+        @include semibold;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      label {
+        @include regular;
+      }
+      input,
+      select {
+        border: 1px solid #e5e7eb;
+        border-radius: 5px;
+        @include medium;
+        font-size: 16px;
+        padding: 9px 14px;
+        @include transition;
+        &[type="number"] {
+          -moz-appearance: textfield;
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+        &[type="checkbox"] {
+          margin: 0 4px 0 0;
+          &:checked {
+            background-color: $color2;
+            border: 1px solid $color2;
+          }
+        }
+        &:focus,
+        &:active {
+          border-color: $color3;
+        }
+        &:focus-visible {
+          outline: none;
+        }
+        &.valid {
+          border-color: $valid;
+        }
+        &.error {
+          border-color: $invalid;
+        }
+      }
+      textarea {
+        border: 1px solid #e5e7eb;
+        border-radius: 5px;
+        @include medium;
+        font-size: 16px;
+        height: 119px;
+        padding: 9px 14px;
+        @include transition;
+        resize: none;
+        width: calc(100% - 14px - 14px);
+        &:focus,
+        &:active {
+          border-color: $color3;
+        }
+        &:focus-visible {
+          outline: none;
+        }
+        &.valid {
+          border-color: $valid;
+        }
+        &.error {
+          border-color: $invalid;
+        }
+        &.liwru-readonly {
+          border: 1px dotted rgba($color: $color3, $alpha: 0.5);
+          @include regular;
+        }
+      }
+    }
+  }
+  &-steps {
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    height: 79px;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    &-step {
+      align-items: center;
+      border: 2px solid $color4;
+      border-radius: 35px;
+      color: $color4;
+      display: flex;
+      @include semibold;
+      height: 35px;
+      justify-content: center;
+      margin-left: 35px;
+      position: relative;
+      width: 35px;
+      &:before {
+        border-top: 2px solid $color4;
+        content: "";
+        display: block;
+        left: -37px;
+        position: absolute;
+        top: 17px;
+        width: 35px;
+        @include tablet992 {
+          left: -47px;
+          width: 45px;
+        }
+      }
+      &:nth-child(1) {
+        margin-left: 0;
+        &:before {
+          display: none;
+        }
+      }
+      &.completed {
+        background-color: $color4;
+        color: $blanco;
+      }
+      &.current {
+        background-color: $color4;
+        color: $blanco;
+      }
+      @include tablet992 {
+        margin-left: 45px;
+      }
+    }
+  }
+  &-msg {
+    background-color: rgba($color: #000000, $alpha: 0.02);
+    border: 1px dashed #e5e7eb;
+    border-radius: 21px;
+    margin: 0 auto;
+    padding: 35px;
+    width: 70%;
+    p {
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+  }
+  &-readonly {
+    background-color: rgba($color: $color3, $alpha: 0.15);
+    border: 1px dotted rgba($color: $color3, $alpha: 0.5);
+    border-radius: 5px;
+    display: block;
+    font-size: 16px;
+    padding: 9px 14px;
+    user-select: none;
+    @include regular;
+    & + .liwru-readonly {
+      margin-top: 14px;
+    }
+  }
+  &-actions {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &-goon {
+      @include boton-primario;
+    }
+    &-goback {
+      @include boton-secundario;
+    }
+    &-files {
+      background-color: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      cursor: pointer;
+      min-height: 44px;
+      padding: 0 21px;
+    }
+    &.outside {
+      justify-content: flex-end;
+      margin-top: 21px;
+      width: 90%;
+      .liwru-actions-goon {
+        border-radius: 8px 8px 0px 8px;
+        margin: 0;
+        img {
+          margin-right: 14px;
+        }
+      }
+      @include laptop1200 {
+        width: 1076px;
+      }
+    }
+    &.fixed {
+      border-top: 1px solid #e5e7eb;
+      bottom: 35px;
+      margin: 0 -35px;
+      padding-top: 35px;
+      position: absolute;
+      width: calc(100%);
+      @include tablet992 {
+        margin: 0 -77px;
+        width: calc(100%);
+      }
+    }
+    a {
+      margin-top: 14px;
+      width: 50%;
+      @include tablet992 {
+        margin-top: 0;
+        width: initial;
+      }
+    }
+    @include tablet992 {
+      flex-direction: row;
+    }
+  }
+  &-messages {
+    &-image {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

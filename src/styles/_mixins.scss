@@ -1,0 +1,88 @@
+@import "./variables";
+@import "./mediaqueries";
+
+$fuente: #484848;
+@mixin texto {
+  color: $fuente;
+  @include regular;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: left;
+}
+@mixin titulo {
+  color: $color1;
+  @include semibold;
+  font-size: 30px;
+  line-height: 32px;
+  text-align: center;
+}
+@mixin titulo-form {
+  color: $color1;
+  @include bold;
+  font-size: 30px;
+  line-height: 32px;
+  text-align: center;
+}
+@mixin label-form {
+  color: #182233;
+  display: block;
+  @include regular;
+}
+@mixin input-form {
+  border: 1px solid #cfcfd0;
+  border-radius: 7px;
+  color: #182233;
+  @include light;
+  padding: 8px 16px;
+}
+@mixin boton-primario {
+  align-items: center;
+  background-color: $color4;
+  border: 2px solid $color4;
+  border-radius: 28px;
+  color: white;
+  display: flex;
+  font-size: 16px;
+  @include regular;
+  height: 48px;
+  justify-content: center;
+  margin: 0;
+  padding: 0 49px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.35s ease;
+  &:hover {
+    background-color: $color4-hover;
+    border-color: $color4-hover;
+  }
+  @include tablet992 {
+    margin: 0 14px;
+  }
+}
+@mixin boton-secundario {
+  align-items: center;
+  background-color: white;
+  border: 2px solid $color3;
+  border-radius: 28px;
+  color: $color3;
+  display: flex;
+  font-size: 16px;
+  @include regular;
+  height: 48px;
+  justify-content: center;
+  margin: 0;
+  padding: 0 49px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.35s ease;
+  &:hover {
+    background-color: rgba($color: white, $alpha: 0.3);
+    border-color: rgba($color: white, $alpha: 0.3);
+  }
+  @include tablet992 {
+    margin: 0 14px;
+  }
+}
+@mixin transition {
+  transition: 0.35s ease;
+}
