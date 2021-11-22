@@ -12,7 +12,22 @@ body {
   height: auto;
   min-height: 100vh;
 }
-
+.validator{
+  font-family: "Tercera";
+  color:Red;
+}
+.loader{
+  text-align: center;
+}
+.liwru-forms-group{
+  display: flex;
+  flex-direction: column;
+}
+.disabled-link {
+  pointer-events: none;
+  background-color: #9e9e9e73 !important;
+  border-color: #9e9e9e !important;
+}
 #liwru {
   height: auto;
   min-height: calc(100vh - 162.5px);
