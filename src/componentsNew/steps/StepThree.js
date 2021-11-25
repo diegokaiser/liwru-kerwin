@@ -10,6 +10,7 @@ export const StepThree = () => {
   const { formOne } = useSelector(state => state)
   const { formTwo } = useSelector(state => state)
 
+
   return (
     <div className="liwru">
       <div className="liwru-home step xs-height">
@@ -125,9 +126,9 @@ export const StepThree = () => {
               <strong>¿El incidente fue en un establecimiento físico?</strong>
               <span className="liwru-readonly">
               {
-                formTwo.establishmentType === '1' ?
-                'Sí'  :
-                'No'
+                formTwo.establishmentType === 'Virtual' ?
+                'No' :
+                'Sí'  
               }
               </span>
             </div>
