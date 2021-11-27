@@ -12,18 +12,18 @@ import { StepZero }     from '../steps/StepZero';
 import { StepOne }      from '../steps/StepOne';
 import { StepTwo }      from '../steps/StepTwo';
 import { StepThree }    from '../steps/StepThree';
-import { Success }      from '../../components/Success';
+import { Success } from '../Success';
 
 
 export const AppRouter = () => {
     return (
         <Router>
             <Switch>
+                <Route path="/success" component={Success} />
                 <Route path="/buscar-incidencia" component={GetState}  />
                 <Route path="/step-zero" component={StepZero} />
                 <Route path="/step-one" component={StepOne} />
                 <Route path="/step-two" component={StepTwo} />
-                <Route path="/success" component={Success} />
                 <Route path="/step-three" component={StepThree} /> 
                 <Route path="/resultado" component={Results} />  
                 <Route path="/" component={Start} />

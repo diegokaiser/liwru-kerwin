@@ -1,14 +1,27 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { IncidenciaService } from "./services/IncidenciaService";
+import { resetIncidenceValues } from "../actions/getIncidence";
+import { clearIdQuery } from "../actions/idQuery";
+import { IncidenceService } from "./IncidenceService";
 
-export const Results = ({estado}) => {
+export const Results = () => {
+  const dispatch = useDispatch()
+
+  const resetIncidence = () => {
+    dispatch(resetIncidenceValues())
+    dispatch(clearIdQuery())
+  }
+
   return (
     <div className="liwru">
       <div className="liwru-home xs-height">
-        <IncidenciaService estado = {estado} />
+        <IncidenceService />
         <div className="liwru-actions fixed">
-          <Link to="/" className="liwru-actions-goon">
+          <Link 
+            to="/" 
+            className="liwru-actions-goon"
+            onClick={resetIncidence}>
             Volver
           </Link>
         </div>
