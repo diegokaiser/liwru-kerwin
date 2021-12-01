@@ -21,7 +21,7 @@ export const Success = () => {
           &lt;medio de contacto&gt; al &lt;dato de contacto&gt;.
         </p>
         <p className="alignCenter">
-          &lt;Por favor, <a href="#">descarga esta copia</a> de la
+          &lt;Por favor, <Link to="/">descarga esta copia</Link> de la
           incidencia&gt;
         </p>
         <div className="liwru-actions fixed">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import check from "../../assets/images/check.svg";
 import trash from "../../assets/images/trash.svg";
 import plus from "../../assets/images/plus.svg";
