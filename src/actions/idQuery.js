@@ -7,6 +7,14 @@ export const idQuery = (id) => {
     }
 };
 
+export const idAgrav = (id) => {
+  console.log('agraviado:',id)
+  return{
+      type: types.idAgr,
+      payload: id,
+  }
+};
+
 export const clearIdQuery = () => {
     return{
         type: types.clearIdQuery,

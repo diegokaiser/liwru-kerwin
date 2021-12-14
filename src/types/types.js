@@ -9,4 +9,6 @@ export const types = {
 
     formOne: '[Form] One',
     formTwo: '[Form] Two',
+
+    idAgr: '[add] agraviado',
 }

@@ -3,11 +3,15 @@ import check                    from "../../assets/images/check.svg";
 import { Link }                 from "react-router-dom";
 import { useForm }              from "../../hooks/useForm";
 import { useDispatch, useSelector }  from "react-redux";
-import { fillFormOne } from '../../actions/fillForm';
-
+import { fillFormOne, postFormOne } from '../../actions/fillForm';
+import Swal from 'sweetalert2'
+import { idAgrav } from "../../actions/idQuery";
 
   const tipoDocumento = ["DNI","PASAPORTE","RUC"]; 
-  
+  Swal.fire(
+    'Por favor llena todos los campos para validar tu reclamo/queja!',
+    'Aceptar!',
+  )
   export const StepOne = () => {
     //ubigeo
     const [ depa,setDepa ] = useState([])
@@ -16,7 +20,11 @@ import { fillFormOne } from '../../actions/fillForm';
 
     //ref DOM
     const dep = useRef()
+    const pro = useRef()
     const dis = useRef()
+
+    const idDepa = useRef()
+
     
     //props to sent data to global state
     const dispatch = useDispatch();
@@ -44,6 +52,7 @@ import { fillFormOne } from '../../actions/fillForm';
         const handleDepart = async()=> {
           const data = await fetch('https://liwru-pollux-apis.herokuapp.com/api/departamentos')
           const response = await data.json()
+          // const depValue = dep.current?.value.split('-')
           setDepa([...response])
           
           console.log(depa)
@@ -53,29 +62,116 @@ import { fillFormOne } from '../../actions/fillForm';
           const handleProvince = async()=> {
             const data = await fetch('https://liwru-pollux-apis.herokuapp.com/api/provincias')
             const response = await data.json()
-            const depaValue = dep.current.value
+            const depaValue = dep.current?.value.split('-') || ''
             console.log(depaValue)
-            const filtros = response.filter(item => item.departamento.nombre === depaValue)
+            const filtros = response.filter(item => item.departamento.nombre === depaValue[0])
             console.log(filtros)
             setProvi(filtros)
           }
           handleProvince()
         }
-        if (dis) {
+        if (pro) {
           const handleDistrit = async()=> {
             const data = await fetch('https://liwru-pollux-apis.herokuapp.com/api/distritos')
             const response = await data.json()
-            const disValue = dis.current?.value
+            let disValue = pro.current?.value.split('-') || ''
             console.log(disValue)
-            const filtros = response.filter(item => item.provincia.nombre === disValue)
+            const filtros = response.filter(item => item.provincia.nombre === disValue[0])
             console.log(filtros)
             setDistri(filtros)
           }
           handleDistrit()
         }
         handleDepart()
-      },[valuesForm,depa])
-  
+      },[depa]) //depa
+
+    const handlePostOne = async (e) => {
+      const idDepa = valuesForm.department.split('-')[1]
+      const idPro = valuesForm.province.split('-')[1]
+      const idDis = valuesForm.district.split('-')[1]
+      // const nuevoPost = {
+      //   clienteNombre: valuesForm.name,
+      //   clienteApeMat: valuesForm.aMaterno,
+      //   clienteApePat: valuesForm.aPaterno,
+      //   clienteEmail: valuesForm.email,
+      //   clienteTelefono: valuesForm.phone,
+      //   clienteDireccion: valuesForm.direction,
+      //   clienteNroDoc: valuesForm.dni,
+      //   estatusEdad: 1,
+      //   estado: 1,
+      //   idTipoDoc: 4,
+      //   idApoderado: null,
+      //   idDepartamento: idDepa*1,
+      //   idProvincia: idPro*1,
+      //   idDistrito: idDis*1,
+      //   createdAt: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`,
+      //   updatedAt: null
+      // }
+
+      //
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "clienteNombre": valuesForm.name,
+        "clienteApeMat": valuesForm.aMaterno,
+        "clienteApePat": valuesForm.aPaterno,
+        "clienteEmail": valuesForm.email,
+        "clienteTelefono": valuesForm.phone,
+        "clienteDireccion": valuesForm.direction,
+        "clienteNroDoc": valuesForm.dni,
+        "estatusEdad": 1,
+        "estado": 1,
+        "idTipoDoc": 4,
+        "idApoderado": null,
+        "idDepartamento": idDepa*1,
+        "idProvincia": idPro*1,
+        "idDistrito": idDis*1,
+        "updatedAt": null
+      });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://liwru-pollux-apis.herokuapp.com/api/agraviados", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result.idAgraviado)
+    dispatch(idAgrav(result.idAgraviado))
+    Swal.fire(
+      'Agraviado guardado!',
+      'Clcik en aceptar!',
+      'Exitoso'
+    )
+  })
+  .catch(error => {
+    console.log('error', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No se puedo guardar, intente más tarde!',
+    })
+  });
+      //
+      //   .then(result => {
+      //     Swal.fire('Agraviado guardado!','You clicked the button!','success')
+      //     console.log(result,'resultresultresultresultresult')
+      //     // dispatch(idAgrav(result.idAgraviado))
+      //   })
+      //   .catch(error => console.log('error', Swal.fire({
+      //     icon: 'error',
+      //     title: 'Oops...',
+      //     text: error
+      //   })));
+
+      console.log(valuesForm)
+      console.log(idDepa)
+
+    }
   
   return (
     <div className="liwru">
@@ -139,7 +235,7 @@ import { fillFormOne } from '../../actions/fillForm';
                   <option value="">Seleccione</option>
                   {
                     tipoDocumento.map( (item) => (
-                      <option key={item} value={item}>{item}</option>
+                      <option  key={item} value={item}>{item}</option>
                     ))
                   }
                 </select>
@@ -202,22 +298,22 @@ import { fillFormOne } from '../../actions/fillForm';
             <div className="liwru-forms-row">
               <div className="liwru-forms-group">
                 <strong>Departamento *</strong>
-                <select ref={dep}  name="department"   onChange={handleInputChange} >
+                <select ref={dep}  name="department"  onChange={handleInputChange} >
                   <option value="">Seleccione</option>
                   {
                     depa.map( (item) => (
-                      <option  key={item.nombre} value={item.nombre}>{item.nombre}</option>
+                      <option  key={item.nombre} value={`${item.nombre}-${item.idDepartamento}`} >{item.nombre}</option>
                     ))
                   }
                 </select>
               </div>
               <div className="liwru-forms-group">
                 <strong>Provincia *</strong>
-                <select ref={dis} name="province" onChange={handleInputChange} >
+                <select ref={pro} name="province" onChange={handleInputChange} >
                   <option value="">Seleccione</option>
                   {
                     provi.map( (item) => (
-                      <option key={item.nombre} value={item.nombre}>{item.nombre}</option>
+                      <option key={item.nombre} value={`${item.nombre}-${item.idProvincia}`}>{item.nombre}</option>
                     ))
                   }
                 </select>
@@ -228,7 +324,7 @@ import { fillFormOne } from '../../actions/fillForm';
                   <option value="">Seleccione</option>
                   {
                     distri.map( (item,index) => (
-                      <option key={`${item.nombre}-${index}`} value={item.nombre}>{item.nombre}</option>
+                      <option key={`${item.nombre}-${index}`} value={`${item.nombre}-${item.idDistrito}`}>{item.nombre}</option>
                     ))
                   }
                 </select>
@@ -243,7 +339,10 @@ import { fillFormOne } from '../../actions/fillForm';
           <Link 
             to="/step-two" 
             className="liwru-actions-goon"
-            onClick={sumbitForm}
+            onClick={()=>{
+              handlePostOne()
+              sumbitForm()
+            }}
             >
             Siguiente
           </Link>

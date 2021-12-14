@@ -177,6 +177,7 @@ export const StepThree = () => {
             <div className="liwru-forms-group">
               <strong>Detalle del reclamo</strong>
               <textarea
+                readOnly={true}
                 className="liwru-readonly"
                 value={formTwo.detailReclam}
               ></textarea>
@@ -184,6 +185,7 @@ export const StepThree = () => {
             <div className="liwru-forms-group">
               <strong>Pedido</strong>
               <textarea
+                readOnly={true}
                 className="liwru-readonly"
                 value={formTwo.request}
               ></textarea>

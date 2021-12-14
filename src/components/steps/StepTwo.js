@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import check from "../../assets/images/check.svg";
 import trash from "../../assets/images/trash.svg";
 import plus from "../../assets/images/plus.svg";
@@ -6,8 +6,15 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { fillFormTwo } from '../../actions/fillForm';
+import { idAgraviado } from '../../reducers/idAgraviado';
+import Swal from 'sweetalert2'
 
 export const StepTwo = () => {
+
+  Swal.fire(
+    'Por favor llena todos los campos para validar tu reclamo/queja!',
+    'Aceptar!',
+  )
 
   const [establish, setEstablish] = useState(false)
   const [showDocument, setShowDocument] = useState(false)
@@ -27,6 +34,8 @@ export const StepTwo = () => {
   const dispatch = useDispatch()
 
   const valuesForm = useSelector(state => state.formTwo)
+  const {idAgra} = useSelector(state => state.idAgraviado)
+
   
   let [values, handleInputChange] = useForm( valuesForm )
   
@@ -76,9 +85,72 @@ useEffect(() => {
   getCampus()
   getMotive()
 }, [])
+const motivo = useRef()
 
 
-const handleSubmit = () => dispatch(fillFormTwo(values))
+const handleSubmit = () => {
+  dispatch(fillFormTwo(values))
+}
+
+const handleSubmitPost = ()=>{
+// post
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "codigoIncidencia": `BCP-${new Date().getFullYear()}${new Date().getMonth()+1}-${idAgra}`,
+    "fechaIncidencia": `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
+    "tipoAtencion": values.typeIncidence,
+    "fechaAproximada": values.dateIncidence,
+    "existeDocs": 1,
+    "fileDocs": null,
+    "pedidoIncidencia": values.request,
+    "detalleIncidencia": values.detailReclam,
+    "tipoContacto": 1,
+    "justificacionIncidencia": null,
+    "actualizadoPor": null,
+    "idMotivo": values.reason.split('-')[1],/// falta esto
+    "idTipoDoc": 1,
+    "idEstado": 1,
+    "idSede": values.establishment.split('-')[1],
+    "idAgraviado": idAgra,
+    "idUsuario": 3,
+    "idTipoIncidencia": values.typeIncidence,
+    "createdAt": `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
+    "updatedAt": null,
+    "deletedAt": null
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch("https://liwru-pollux-apis.herokuapp.com/api/incidencias", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Swal.fire(
+        'Agraviado guardado!',
+        'Clcik en aceptar!',
+        'Exitoso'
+      )
+    })
+    .catch(error => {
+      console.log('error', error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Intentelo más tarde!',
+      })
+    });
+//post
+  console.log(motivo.current)
+  console.log(values)
+  console.log(idAgra)
+}
 
 
   return (
@@ -121,11 +193,11 @@ const handleSubmit = () => dispatch(fillFormTwo(values))
           <div className="liwru-forms-row">
             <div className="liwru-forms-group">
               <strong>Motivo del reclamo/queja *</strong>
-              <select name="reason" onChange={handleInputChange}>
+              <select ref={motivo} name="reason" onChange={handleInputChange}>
                 <option value="">Seleccione</option>
                 {
                   motive.map( (reason) => (
-                    <option key={reason.idMotivo} value={reason.estadoDescripcion}>{reason.estadoDescripcion}</option>
+                    <option value={`${reason.estadoDescripcion}-${reason.idMotivo}`}>{reason.estadoDescripcion}</option>
                   ) )
                 }
               </select>
@@ -155,7 +227,7 @@ const handleSubmit = () => dispatch(fillFormTwo(values))
                     <option value="">Seleccione</option>
                     {
                       campus.map( (establishment) => (
-                        <option key={establishment.nombre} value={establishment.nombre}>{establishment.nombre}</option>
+                        <option key={establishment.nombre} value={`${establishment.nombre}-${establishment.idSede}`}>{establishment.nombre}</option>
                       ) )
                     }
                   </select>
@@ -242,7 +314,10 @@ const handleSubmit = () => dispatch(fillFormTwo(values))
           <Link 
             to="/step-three" 
             className="liwru-actions-goon"
-            onClick={handleSubmit}
+            onClick={()=>{
+              handleSubmit()
+              handleSubmitPost()
+            }}
             >
             Siguiente
           </Link>
